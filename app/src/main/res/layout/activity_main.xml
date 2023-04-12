@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background3"
     tools:context=".MainActivity">
 
     <TextView
@@ -25,6 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recyclerView"
-        android:layout_below="@id/title_view" />
+        android:layout_below="@id/title_view"
+
+        />
+
 
 </RelativeLayout>
