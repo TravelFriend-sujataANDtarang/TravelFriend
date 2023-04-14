@@ -38,4 +38,5 @@ public class MyConstants {
     public static final String MY_LIST_CAMEL_CASE = "My List";
 
     public static final String MY_SELECTIONS_CAMEL_CASE = "My Selections";
+    public static final String FIRST_TIME_CAMEL_CASE = "first time";
 }

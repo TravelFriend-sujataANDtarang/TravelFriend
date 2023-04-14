@@ -1,13 +1,12 @@
-package com.Models;
+package com.example.travelfriend.Models;
 
+import java.io.Serializable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
-
-@Entity(tableName = "items")
-public class items implements Serializable{
+@Entity(tableName="items")
+public class Items implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     int ID=0;
@@ -24,18 +23,18 @@ public class items implements Serializable{
     @ColumnInfo(name="checked")
     Boolean checked=false;
 
-    public items() {
+    public Items() {
 
     }
 
-    public items(String itemname, String category, Boolean checked) {
+    public Items(String itemname, String category, Boolean checked) {
         this.addedby="system";
         this.itemname = itemname;
         this.category = category;
         this.checked = checked;
     }
 
-    public items(String itemname, String category, String addedby, Boolean checked) {
+    public Items(String itemname, String category, String addedby, Boolean checked) {
         this.itemname = itemname;
         this.category = category;
         this.addedby = addedby;
