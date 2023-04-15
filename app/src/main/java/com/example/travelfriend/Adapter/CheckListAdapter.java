@@ -1,6 +1,10 @@
 package com.example.travelfriend.Adapter;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.travelfriend.Constants.MyConstants;
 import com.example.travelfriend.Database.RoomDB;
 import com.example.travelfriend.Models.Items;
 import com.example.travelfriend.R;
@@ -45,8 +50,69 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CheckListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CheckListViewHolder holder, @SuppressLint("RecyclerView") int position) {
            holder.checkBox.setText(itemsList.get(position).getItemname());
+           holder.checkBox.setChecked(itemsList.get(position).getChecked());
+
+           if(MyConstants.FALSE_STRING.equals(show)){
+               holder.btnDelete.setVisibility(View.GONE);
+               holder.layout.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.border_one));
+           }else {
+               if(itemsList.get(position).getChecked()){
+                    holder.layout.setBackgroundColor(Color.parseColor("#8e546f"));
+               }else {
+                   holder.layout.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.border_one));
+               }
+           }
+
+           holder.checkBox.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   Boolean check=holder.checkBox.isChecked();
+                   database.mainDao().checkUncheck(itemsList.get(position).getID(),check);
+                   if(MyConstants.FALSE_STRING.equals(show)){
+                       itemsList=database.mainDao().getAllSelected(true);
+                       notifyDataSetChanged();
+                   }else {
+                       itemsList.get(position).setChecked(check);
+                       notifyDataSetChanged();
+                       Toast tostMessage=null;
+                       if (tostMessage!=null){
+                           tostMessage.cancel();
+                       }
+
+                       if(itemsList.get(position).getChecked()){
+                           tostMessage=Toast.makeText(context,"("+holder.checkBox.getText()+" )Packed",Toast.LENGTH_SHORT);
+                       }else {
+                           tostMessage=Toast.makeText(context,"("+holder.checkBox.getText()+" ) Un-Packed",Toast.LENGTH_SHORT);
+                       }
+                       tostMessage.show();
+                   }
+               }
+           });
+
+           holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   new AlertDialog.Builder(context)
+                           .setTitle("Delete ("+itemsList.get(position).getItemname()+" )")
+                           .setMessage("Are you sure?")
+                           .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialogInterface, int i) {
+                                   database.mainDao().delete(itemsList.get(position));
+                                   itemsList.remove(itemsList.get(position));
+                                   notifyDataSetChanged();
+                               }
+                           }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialogInterface, int i) {
+                                    Toast.makeText(context,"Cancelled",Toast.LENGTH_SHORT).show();
+                               }
+                           }).setIcon(R.drawable.ic_delete)
+                           .show();
+               }
+           });
     }
 
     @Override
