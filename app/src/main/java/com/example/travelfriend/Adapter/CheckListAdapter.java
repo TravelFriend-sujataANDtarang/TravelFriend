@@ -109,7 +109,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListViewHolder>{
                                public void onClick(DialogInterface dialogInterface, int i) {
                                     Toast.makeText(context,"Cancelled",Toast.LENGTH_SHORT).show();
                                }
-                           }).setIcon(R.drawable.ic_delete)
+                           }).setIcon(R.drawable.delete_white)
                            .show();
                }
            });

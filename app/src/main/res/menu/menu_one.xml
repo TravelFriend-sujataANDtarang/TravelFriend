@@ -7,7 +7,7 @@
         android:title="Create custom list"
         android:id="@+id/btnCustomList"/>
     <item
-        android:id="btnReset"
+        android:id="@+id/btnReset"
         android:title="Reset to default" />
     <item
         android:id="@+id/btnDeleteDefault"
@@ -19,7 +19,7 @@
         android:id="@+id/btnExit"
         android:title="Exit" />
     <item
-        android:id="btnSearch"
+        android:id="@+id/btnSearch"
         android:title="Search"
         android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom"
