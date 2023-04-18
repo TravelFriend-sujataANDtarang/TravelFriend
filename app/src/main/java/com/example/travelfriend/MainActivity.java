@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         else{
-            Toast.makeText(this, "Tap back button in order to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Tap back button again to exit", Toast.LENGTH_SHORT).show();
         }
         mBackPressed=System.currentTimeMillis();
     }
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         images.add(R.drawable.p1);
         images.add(R.drawable.p2);
         images.add(R.drawable.p3);
-        images.add(R.drawable.p4);
+        images.add(R.drawable.fam3);
         images.add(R.drawable.p5);
         images.add(R.drawable.p6);
         images.add(R.drawable.p7);

@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background3"
+    android:gravity="center_vertical"
     tools:context=".AboutUs">
 
     <TextView
         android:id="@+id/aboutUs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:text="BUILT BY:"
         android:layout_centerHorizontal="true"
@@ -36,6 +36,7 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:background="#E3ACAC"
+        android:alpha="0.9"
         android:text="This app was built by Sujata Gahlaut and Tarang Ahuja from Computer Science
 Department of Indraprastha College for Women"/>
     <TextView
@@ -67,5 +68,6 @@ Department of Indraprastha College for Women"/>
         android:textStyle="bold"
         android:textAlignment="center"
         android:background="#E3ACAC"
+        android:alpha="0.9"
         android:text="Email id: \ntarangahuja78@gmail.com\n      sujatagahlaut2017@gmail.com"/>
 </RelativeLayout>
