@@ -18,10 +18,10 @@
     <item
         android:id="@+id/btnExit"
         android:title="Exit" />
-    <item
-        android:id="@+id/btnSearch"
-        android:title="Search"
-        android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom"
-        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+<!--    <item-->
+<!--        android:id="@+id/btnSearch"-->
+<!--        android:title="Search"-->
+<!--        android:icon="@drawable/ic_search"-->
+<!--        app:showAsAction="ifRoom"-->
+<!--        app:actionViewClass="androidx.appcompat.widget.SearchView" />-->
 </menu>

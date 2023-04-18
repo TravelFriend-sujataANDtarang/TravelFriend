@@ -33,21 +33,9 @@ public class AppData extends Application {
     }
 
     public List<Items> getBasicData(){
-        category ="Basic Needs";
-        List<Items> basicItem=new ArrayList<>();
-
-        basicItem.add(new Items("Visa",category,false));
-        basicItem.add(new Items("Passport",category,false));
-        basicItem.add(new Items("House Keys",category,false));
-        basicItem.add(new Items("Medical Insurance",category,false));
-        basicItem.add(new Items("Books",category,false));
-        basicItem.add(new Items("Umbrella",category,false));
-        basicItem.add(new Items("Journal",category,false));
-        basicItem.add(new Items("Money",category,false));
-        basicItem.add(new Items("Wallet",category,false));
-        basicItem.add(new Items("Medicines",category,false));
-
-        return basicItem;
+        String[] data={"Visa","Passport","Medical Insurance","Books","Umbrella","Journal","Money","Wallet"};
+        return prepareItemsList(MyConstants.BASIC_NEEDS_CAMEL_CASE,data);
+//        return basicItem;
     }
 
     public List<Items> getPersonalCareData(){
@@ -76,6 +64,16 @@ public class AppData extends Application {
         String[] data={"Pump","Car jack","Spare car key","car charger","window sun shades"};
         return prepareItemsList(MyConstants.CAR_SUPPLIES_CAMEL_CASE,data);
     }
+
+    public List<Items> getNeedsData(){
+        String[] data={"Backpack","Lugage tag","Magazine","novel","sketch book","Sewing Kit","Travel lock","Laundry bag","Important numbers"};
+        return prepareItemsList(MyConstants.NEEDS_CAMEL_CASE,data);
+    }
+
+    public List<Items> getHealthData(){
+        String[] data={"Bandaid","Pain relief medicine","Energy drink","Cough/cold medicine","fever medicine","Stomach issues medicine"};
+        return prepareItemsList(MyConstants.HEALTH_CAMEL_CASE,data);
+    }
     public List<Items> prepareItemsList(String category,String[] data){
         List<String> list= Arrays.asList(data);
         List<Items> dataList=new ArrayList<>();
@@ -91,6 +89,7 @@ public class AppData extends Application {
         List<List<Items>> listofAllItems=new ArrayList<>();
         listofAllItems.clear();
 
+        listofAllItems.add(getPersonalCareData());
         listofAllItems.add(getBasicData());
         listofAllItems.add(getBeachSuppliesData());
         listofAllItems.add(getFoodData());
@@ -98,6 +97,7 @@ public class AppData extends Application {
         listofAllItems.add(getCarSupplies());
         listofAllItems.add(getTechnologyData());
         listofAllItems.add(getPersonalCareData());
+        listofAllItems.add(getHealthData());
 
         return listofAllItems;
     }
@@ -120,7 +120,7 @@ public class AppData extends Application {
                    database.mainDao().saveItem(item);
                }
                 Toast.makeText(context, category+"Reset Successfully.", Toast.LENGTH_SHORT).show();
-            }else{
+            }else{      //true onlydelete
                 Toast.makeText(context,category+"Reset Successfully.",Toast.LENGTH_SHORT).show();
             }
 
@@ -133,12 +133,11 @@ public class AppData extends Application {
     }
 
     private List<Items> deleteAndGetListbyCategory(String category,Boolean onlyDelete){
-        if(onlyDelete){
+        if(onlyDelete){ //deletes data added by system
             database.mainDao().deleteAllByCategoryAndAddedBy(category,MyConstants.SYSTEM_SMALL);
 
-        }else{
+        }else{  //deletes all data
             database.mainDao().deleteAllByCategory(category);
-
         }
         switch(category){
             case MyConstants.BASIC_NEEDS_CAMEL_CASE:
@@ -147,8 +146,8 @@ public class AppData extends Application {
                 return getClothingData();
             case MyConstants.PERSONAL_CARE_CAMEL_CASE:
                 return getPersonalCareData();
-            case MyConstants.BABY_NEEDS_CAMEL_CASE:
-                return getBabyNeedsData();
+//            case MyConstants.BABY_NEEDS_CAMEL_CASE:
+//                return getBabyNeedsData();
             case MyConstants.HEALTH_CAMEL_CASE:
                 return getHealthData();
             case MyConstants.TECHNOLOGY_CAMEL_CASE:

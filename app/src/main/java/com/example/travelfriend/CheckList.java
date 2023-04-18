@@ -1,7 +1,8 @@
 
 package com.example.travelfriend;
 
-import androidx.annotation.NonNull;
+import  androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,37 +52,37 @@ public class CheckList extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_one,menu);
 
-        if(MyConstants.MY_SELECTIONS.equals(header)){
+        if(MyConstants.MY_SELECTIONS.equals(header)){   //hides my selections,reset to default and delete default data
             menu.getItem(0).setVisible(false);
             menu.getItem(2).setVisible(false);
             menu.getItem(3).setVisible(false);
 
         }
-        else if(MyConstants.MY_LIST_CAMEL_CASE.equals(header)){
+        else if(MyConstants.MY_LIST_CAMEL_CASE.equals(header)){ //hides create custom list option
             menu.getItem(1).setVisible(false);
 
         }
 
-        MenuItem menuItem = menu.findItem(R.id.btnSearch);
-        SearchView searchView=(SearchView) menuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                List<Items> mFinalist=new ArrayList<>();
-                for(Items items:itemsList){
-                    if(items.getItemname().toLowerCase().startsWith(s.toLowerCase())){
-                        mFinalist.add(items);
-                    }
-                }
-                updateRecycler(mFinalist);
-                return false;
-            }
-        });
+//        MenuItem menuItem = menu.findItem(R.id.btnSearch);
+//        SearchView searchView=(SearchView) menuItem.getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String s) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String s) {
+//                List<Items> mFinalist=new ArrayList<>();
+//                for(Items items:itemsList){
+//                    if(items.getItemname().toLowerCase().startsWith(s.toLowerCase())){
+//                        mFinalist.add(items);
+//                    }
+//                }
+//                updateRecycler(mFinalist);
+//                return false;
+//            }
+//        });
 
         return true;
     }
@@ -126,12 +127,45 @@ public class CheckList extends AppCompatActivity {
                 return true;
 
             case R.id.btnReset:
+                new AlertDialog.Builder(this)
+                        .setTitle("Reset to default")
+                        .setMessage("Are you sure?\n\n This will load the default data provided by the app and delete your custom data you have added in "+header)
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                appData.persistDataByCategory(header,false);
+                                itemsList=database.mainDao().getAll(header);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).setIcon(R.drawable.ic_alert).show();
 
 
-            }
+            case R.id.btnAboutUs:
+                intent=new Intent(this,AboutUs.class);
+                startActivity(intent);
+                return true;
+            case R.id.btnExit:
+                this.finishAffinity();
+                Toast.makeText(this,"Pack your bag\nExit completed",Toast.LENGTH_SHORT).show();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
-        return super.onOptionsItemSelected(item);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==101){
+            itemsList=database.mainDao().getAll(header);
+            updateRecycler(itemsList);
+        }
     }
 
     @Override
